@@ -1,0 +1,63 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Auto-generated VS/VSCode/JetBrains Rider files
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Exclude all .meta files (optional, but often included)
+# Uncomment if you do not want to track them
+# *.meta
+
+# Unity Asset Store files
+/[Aa]ssets/AssetStoreTools*
+
+# TextMesh Pro
+[Aa]ssets/TextMesh Pro/*
+
+# Build generated folders and files
+Builds/
+[Bb]uilds/
+*.apk
+*.aab
+*.unitypackage
+
+# User-specific Unity preferences
+/[Uu]ser[Ss]ettings/
+Packages/manifest.json
+
+# Exclude crash reports
+sys_crashreports/*
+
+# Logs
+sys_logs/*
+
+# Lightmaps
+LightmapSnapshot
+
+# Visual Studio Code - generated files
+.history/
+*.code-workspace
+
+# Rider
+.idea/
+*.iml
