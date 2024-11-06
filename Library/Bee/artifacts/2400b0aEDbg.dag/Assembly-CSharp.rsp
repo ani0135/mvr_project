@@ -382,6 +382,7 @@
 "Assets/Obstacles/Scripts/Rotator.cs"
 "Assets/Obstacles/Scripts/SavePos.cs"
 "Assets/Obstacles/Scripts/WallMovable.cs"
+"Assets/PlayerAgent.cs"
 "Assets/PrefabReferences.cs"
 "Assets/ScoreBoardManager.cs"
 -langversion:9.0

@@ -76,6 +76,7 @@
     <Compile Include="Assets/Obstacles/Scripts/MovableObs.cs" />
     <Compile Include="Assets/Obstacles/Scripts/KillZone.cs" />
     <Compile Include="Assets/Obstacles/Scripts/Pendulum.cs" />
+    <Compile Include="Assets/PlayerAgent.cs" />
     <Compile Include="Assets/Obstacles/Controller/CameraSwitcher.cs" />
     <Compile Include="Assets/Obstacles/Scripts/WallMovable.cs" />
     <Compile Include="Assets/Obstacles/Controller/CameraManager.cs" />

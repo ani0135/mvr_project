@@ -169,6 +169,12 @@ public class CharacterControls : MonoBehaviour {
 		rb.AddForce(new Vector3(0, -gravity * GetComponent<Rigidbody>().mass, 0));
 	}
 
+		public void Move(Vector3 direction)
+	{
+		moveDir = direction.normalized; // Normalize to avoid speed scaling
+	}
+
+
 	private void Update()
 	 {	
 	// Debug.Log($"Player {playerIndex}");

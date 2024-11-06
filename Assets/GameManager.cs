@@ -20,35 +20,54 @@ public class GameManager : MonoBehaviour
         SetActivePlayer(currentPlayerIndex);
     }
 
+    // public Transform[] targets; // Array of target transforms (one for each player)
+
+    // private Transform GetTargetForPlayer(int playerIndex)
+    // {
+    //     if (targets != null && playerIndex < targets.Length)
+    //     {
+    //         return targets[playerIndex];
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("Target not assigned or out of range for player " + playerIndex);
+    //         return null;
+    //     }
+    // }
     void SpawnPlayers()
+{
+    players = new GameObject[numberOfPlayers];
+    Color[] playerColors = { Color.black, Color.blue, Color.green, Color.yellow, Color.magenta };
+
+    for (int i = 0; i < numberOfPlayers; i++)
     {
-        players = new GameObject[numberOfPlayers];
-        Color[] playerColors = { Color.black, Color.blue, Color.green, Color.yellow, Color.magenta };
+        players[i] = Instantiate(playerPrefab, spawnPoints[i].position, Quaternion.identity);
+        players[i].name = "Player " + i;
+        players[i].GetComponent<CharacterControls>().SetPlayerIndex(i);
+        players[i].GetComponent<CharacterControls>().cam = cameraHolder;
 
-        for (int i = 0; i < numberOfPlayers; i++)
+        PlayerAgent agent = players[i].AddComponent<PlayerAgent>();
+        agent.playerIndex = i; // Assign player-specific index
+        // No specific target is assigned now, each player will compete for any available award
+
+        // Assign unique colors to each player (optional)
+        Renderer renderer = players[i].GetComponent<Renderer>();
+        if (renderer != null)
         {
-            players[i] = Instantiate(playerPrefab, spawnPoints[i].position, Quaternion.identity);
-            players[i].name = "Player " + (i);
-
-            players[i].GetComponent<CharacterControls>().SetPlayerIndex(i); // Zero-based index
-            players[i].GetComponent<CharacterControls>().cam = cameraHolder; // Assign cameraHolder to cam
-
-            Renderer renderer = players[i].GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.material = new Material(renderer.material);
-                renderer.material.color = playerColors[i % playerColors.Length];
-                renderer.material.SetFloat("_Mode", 3);
-                renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                renderer.material.SetInt("_ZWrite", 0);
-                renderer.material.DisableKeyword("_ALPHATEST_ON");
-                renderer.material.EnableKeyword("_ALPHABLEND_ON");
-                renderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                renderer.material.renderQueue = 3000;
-            }
+            renderer.material = new Material(renderer.material);
+            renderer.material.color = playerColors[i % playerColors.Length];
+            renderer.material.SetFloat("_Mode", 3);
+            renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            renderer.material.SetInt("_ZWrite", 0);
+            renderer.material.DisableKeyword("_ALPHATEST_ON");
+            renderer.material.EnableKeyword("_ALPHABLEND_ON");
+            renderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            renderer.material.renderQueue = 3000;
         }
     }
+}
+
 
     void Update()
     {
