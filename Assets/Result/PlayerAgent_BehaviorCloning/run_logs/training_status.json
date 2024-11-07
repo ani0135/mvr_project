@@ -2,22 +2,22 @@
     "PlayerAgent_0": {
         "checkpoints": [
             {
-                "steps": 10611,
-                "file_path": "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-10611.onnx",
-                "reward": -0.9880239520958084,
-                "creation_time": 1730968220.4265733,
+                "steps": 6917,
+                "file_path": "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-6917.onnx",
+                "reward": null,
+                "creation_time": 1731007109.8060079,
                 "auxillary_file_paths": [
-                    "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-10611.pt"
+                    "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-6917.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 10611,
+            "steps": 6917,
             "file_path": "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0.onnx",
-            "reward": -0.9880239520958084,
-            "creation_time": 1730968220.4265733,
+            "reward": null,
+            "creation_time": 1731007109.8060079,
             "auxillary_file_paths": [
-                "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-10611.pt"
+                "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-6917.pt"
             ]
         }
     },

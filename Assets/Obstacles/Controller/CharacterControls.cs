@@ -80,7 +80,7 @@ public class CharacterControls : MonoBehaviour {
 			// }
 
 			// Destroy the award GameObject
-			Destroy(collision.gameObject);
+			// Destroy(collision.gameObject);
 		}
 	}
 

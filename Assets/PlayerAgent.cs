@@ -22,7 +22,7 @@ public class PlayerAgent : Agent
         
 
         // Initialize arrays with tagged objects
-        // awards = GameObject.FindGameObjectsWithTag("Award");
+        awards = GameObject.FindGameObjectsWithTag("Award");
         // obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         scoreBoardManager = FindObjectOfType<ScoreBoardManager>();
     }
@@ -32,7 +32,7 @@ public class PlayerAgent : Agent
         rb = GetComponent<Rigidbody>();
         // rb = GetComponent<Rigidbody>() ?? gameObject.AddComponent<Rigidbody>();
         characterControls = GetComponent<CharacterControls>();
-        awards = GameObject.FindGameObjectsWithTag("Award");
+        // awards = GameObject.FindGameObjectsWithTag("Award");
         // obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         // Reset player position if it has fallen
         if (this.transform.localPosition.y < 0)
@@ -42,8 +42,18 @@ public class PlayerAgent : Agent
             characterControls.LoadCheckPoint(); // Reset to checkpoint
         }
 
-        // Reactivate all awards for collection
-        if (awards != null)
+        // Reactivate all awards if none are active
+        bool anyActive = false;
+        foreach (GameObject award in awards)
+        {
+            if (award.activeSelf)
+            {
+                anyActive = true;
+                break;
+            }
+        }
+
+        if (!anyActive) // If all awards were collected, reactivate them
         {
             foreach (GameObject award in awards)
             {
@@ -66,7 +76,28 @@ public class PlayerAgent : Agent
         // Add player’s velocity (2 values)
         sensor.AddObservation(rb.velocity.x);
         sensor.AddObservation(rb.velocity.z);
+
+        // Calculate alignment (1 value)
+        // if (nearestAward != null)
+        // {
+            // // Direction vector to the award
+            // Vector3 directionToAward = (nearestAward.transform.localPosition - this.transform.localPosition).normalized;
+            
+            // // Calculate angle between player’s forward direction and direction to the award
+            // float alignment = Vector3.Dot(transform.forward, directionToAward);
+
+            // Add alignment observation
+            // sensor.AddObservation(transform.forward.x);
+            // sensor.AddObservation(transform.forward.z);
+        // }
+        // else
+        // {
+            // If no award is found, add zero as alignment observation
+            // sensor.AddObservation(0f);
+        // }
     }
+
+    
 
 
     public override void OnActionReceived(ActionBuffers actionBuffers)

@@ -368,7 +368,6 @@
 -analyzer:"/home/ani/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/home/ani/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Cup11.cs"
-"Assets/FastMesh/Scripts/SceneViewText.cs"
 "Assets/GameManager.cs"
 "Assets/Obstacles/Controller/CameraManager.cs"
 "Assets/Obstacles/Controller/CameraSwitcher.cs"
