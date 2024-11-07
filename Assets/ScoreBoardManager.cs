@@ -5,7 +5,7 @@ public class ScoreBoardManager : MonoBehaviour
 {
     public TMP_Text[] scoreTexts; // Array to hold score text references for each player
     private int[] playerScores; // Array to track scores for each player
-    public int numberOfPlayers = 5; // Total number of players
+    public int numberOfPlayers; // Total number of players
 
     void Start()
     {
@@ -43,8 +43,8 @@ public class ScoreBoardManager : MonoBehaviour
         for (int i = 0; i < numberOfPlayers; i++)
         {   
             // Debug.Log(scoreTexts.Length);
-            scoreTexts[i].text = "Player " + (i+1) + ": " + playerScores[i]; // Update UI text
-            Debug.Log( scoreTexts[i].text);
+            scoreTexts[i].text = "Score " + ": " + playerScores[i]; // Update UI text
+            // Debug.Log( scoreTexts[i].text);
             
         }
     }

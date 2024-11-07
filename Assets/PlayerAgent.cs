@@ -10,24 +10,30 @@ public class PlayerAgent : Agent
     private CharacterControls characterControls;
     public int playerIndex;
     private GameObject[] awards; // Array to hold all green award GameObjects
-    private GameObject[] obstacles; // Array to hold all red obstacle GameObjects
+    // private GameObject[] obstacles; // Array to hold all red obstacle GameObjects
     private ScoreBoardManager scoreBoardManager; // Reference to ScoreBoardManager
 
     void Start()
     {   
-        rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>();
         // rb = GetComponent<Rigidbody>() ?? gameObject.AddComponent<Rigidbody>();
-        characterControls = GetComponent<CharacterControls>();
+        // characterControls = GetComponent<CharacterControls>();
         // characterControls = GetComponent<CharacterControls>() ?? gameObject.AddComponent<CharacterControls>();
+        
 
         // Initialize arrays with tagged objects
-        awards = GameObject.FindGameObjectsWithTag("Award");
-        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        // awards = GameObject.FindGameObjectsWithTag("Award");
+        // obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         scoreBoardManager = FindObjectOfType<ScoreBoardManager>();
     }
 
     public override void OnEpisodeBegin()
-    {
+    {   
+        rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>() ?? gameObject.AddComponent<Rigidbody>();
+        characterControls = GetComponent<CharacterControls>();
+        awards = GameObject.FindGameObjectsWithTag("Award");
+        // obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         // Reset player position if it has fallen
         if (this.transform.localPosition.y < 0)
         {
@@ -46,32 +52,20 @@ public class PlayerAgent : Agent
         }
     }
 
+    
+
     public override void CollectObservations(VectorSensor sensor)
     {
-        
-        // Add nearest award position
+        // Add nearest award position (3 values)
         GameObject nearestAward = GetNearestAward();
-        if (nearestAward != null)
-        {
-            sensor.AddObservation(nearestAward.transform.localPosition); // 3 values for position (x, y, z)
-        }
-        else
-        {
-            sensor.AddObservation(Vector3.zero); // Dummy data if no award is found
-        }
-
-        // Add player’s own position (3 values for position)
+        sensor.AddObservation(nearestAward != null ? nearestAward.transform.localPosition : Vector3.zero);
+        // Debug.Log(nearestAward.transform.localPosition);
+        // Add player’s own position (3 values)
         sensor.AddObservation(this.transform.localPosition);
 
-        // Add player's velocity (2 values for x and z velocity)
+        // Add player’s velocity (2 values)
         sensor.AddObservation(rb.velocity.x);
         sensor.AddObservation(rb.velocity.z);
-        Debug.Log("Observations for player " + playerIndex + ": " + string.Join(", ", nearestAward.transform.localPosition, this.transform.localPosition, rb.velocity.x, rb.velocity.z));
-
-
-        // Add any additional relevant observations
-        // You may also add other information, like if the player is near obstacles, etc.
-        // sensor.AddObservation(this.isNearObstacle()); // Example additional observation, modify accordingly
     }
 
 
@@ -82,48 +76,53 @@ public class PlayerAgent : Agent
 
         // Check for proximity to nearest award
         GameObject nearestAward = GetNearestAward();
-        if (nearestAward != null && Vector3.Distance(this.transform.localPosition, nearestAward.transform.localPosition) < 1.0f)
+        if (nearestAward != null && Vector3.Distance(this.transform.localPosition, nearestAward.transform.localPosition) < 1.5f)
         {
-            SetReward(1.0f);
+            SetReward(2.0f);
             scoreBoardManager.AddScore(playerIndex, 10); // Increase score
             nearestAward.SetActive(false); // Deactivate collected award
         }
 
         // Penalty for touching obstacles
-        if (IsTouchingObstacle())
-        {
-            SetReward(-1.0f);
-            scoreBoardManager.AddScore(playerIndex, -5); // Reduce score
-        }
+        // if (IsTouchingObstacle())
+        // {
+        //     SetReward(-1.0f);
+        //     Debug.Log("negative reward");
+        //     scoreBoardManager.AddScore(playerIndex, -1); // Reduce score
+        //     EndEpisode();
+        // }
 
         // End episode if the player falls
         if (this.transform.localPosition.y < 0)
-        {
+        {   
+            SetReward(-1.0f);
+            Debug.Log("negative reward");
+            scoreBoardManager.AddScore(playerIndex, -1); // Reduce score
             EndEpisode();
         }
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var continuousActionsOut = actionsOut.ContinuousActions;
+        // Use user input for movement
+        continuousActionsOut[0] = Input.GetAxis("Horizontal" + playerIndex); // For horizontal movement (x-axis)
+        continuousActionsOut[1] = Input.GetAxis("Vertical" + playerIndex);   // For vertical movement (z-axis)
+        
+        // Debugging log for heuristic actions
+        // Debug.Log("Heuristic action for player " + playerIndex + ": " + continuousActionsOut[0] + ", " + continuousActionsOut[1]);
     }
 
     // public override void Heuristic(in ActionBuffers actionsOut)
     // {
     //     var continuousActionsOut = actionsOut.ContinuousActions;
     //     // Use user input for movement
-    //     continuousActionsOut[0] = Input.GetAxis("Horizontal" + playerIndex); // For horizontal movement (x-axis)
-    //     continuousActionsOut[1] = Input.GetAxis("Vertical" + playerIndex);   // For vertical movement (z-axis)
+    //     continuousActionsOut[0] = Input.GetAxis("Horizontal"); // For horizontal movement (x-axis)
+    //     continuousActionsOut[1] = Input.GetAxis("Vertical");   // For vertical movement (z-axis)
         
     //     // Debugging log for heuristic actions
     //     Debug.Log("Heuristic action for player " + playerIndex + ": " + continuousActionsOut[0] + ", " + continuousActionsOut[1]);
     // }
-
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        var continuousActionsOut = actionsOut.ContinuousActions;
-        // Use user input for movement
-        continuousActionsOut[0] = Input.GetAxis("Horizontal"); // For horizontal movement (x-axis)
-        continuousActionsOut[1] = Input.GetAxis("Vertical");   // For vertical movement (z-axis)
-        
-        // Debugging log for heuristic actions
-        Debug.Log("Heuristic action for player " + playerIndex + ": " + continuousActionsOut[0] + ", " + continuousActionsOut[1]);
-    }
 
 
     private GameObject GetNearestAward()
@@ -146,15 +145,26 @@ public class PlayerAgent : Agent
         return nearestAward;
     }
 
-    private bool IsTouchingObstacle()
-    {
-        foreach (GameObject obstacle in obstacles)
-        {
-            if (obstacle != null && Vector3.Distance(this.transform.localPosition, obstacle.transform.localPosition) < 1.0f)
-            {
-                return true; // Player is close enough to an obstacle
-            }
-        }
-        return false;
-    }
+    // private bool IsTouchingObstacle()
+    // {
+    //     foreach (GameObject obstacle in obstacles)
+    //     {
+    //         // if (obstacle != null && Vector3.Distance(this.transform.localPosition, obstacle.transform.localPosition) < 2.0f)
+    //         // {
+    //         //     Debug.Log(Vector3.Distance(this.transform.localPosition, obstacle.transform.localPosition));
+    //         //     return true; // Player is close enough to an obstacle
+                
+    //         // }
+
+    //         if (obstacle != null && Vector2.Distance(new Vector2(this.transform.localPosition.x, this.transform.localPosition.z),
+    //         new Vector2(obstacle.transform.localPosition.x, obstacle.transform.localPosition.z))< 1.0f)
+    //         {
+    //             Debug.Log(Vector2.Distance(new Vector2(this.transform.localPosition.x, this.transform.localPosition.z),
+    //         new Vector2(obstacle.transform.localPosition.x, obstacle.transform.localPosition.z)));
+    //             return true; // Player is close enough to an obstacle
+                
+    //         }
+    //     }
+    //     return false;
+    // }
 }

@@ -52,7 +52,7 @@ public class CharacterControls : MonoBehaviour {
 		if (collision.gameObject.CompareTag("Obstacle"))
 		{
 			scoreBoardManager.DeductScore(playerIndex, 1); // Deduct 1 point for collision
-			Debug.Log("Collided with Obstacle");
+			// Debug.Log("Collided with Obstacle");
 
 			// // Play the destruction effect at the obstacle's position
 			// if (destructionEffect != null)
@@ -69,7 +69,7 @@ public class CharacterControls : MonoBehaviour {
 		if (collision.gameObject.CompareTag("Award"))
 		{
 			scoreBoardManager.AddScore(playerIndex, 10); // Reward 1 point for collision
-			Debug.Log("Collided with Award");
+			// Debug.Log("Collided with Award");
 
 			// Similar effect logic if needed for awards
 			// if (destructionEffect != null)
