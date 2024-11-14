@@ -1,0 +1,29 @@
+{
+    "PlayerAgent_0": {
+        "checkpoints": [
+            {
+                "steps": 6917,
+                "file_path": "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-6917.onnx",
+                "reward": null,
+                "creation_time": 1731007109.8060079,
+                "auxillary_file_paths": [
+                    "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-6917.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 6917,
+            "file_path": "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0.onnx",
+            "reward": null,
+            "creation_time": 1731007109.8060079,
+            "auxillary_file_paths": [
+                "/media/ani/TOSHIBA_E1/Mobile_VR_AI/Project/Assets/Result/PlayerAgent_BehaviorCloning/PlayerAgent_0/PlayerAgent_0-6917.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.4.1+cu121"
+    }
+}
